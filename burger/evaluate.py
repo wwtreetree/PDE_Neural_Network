@@ -23,11 +23,33 @@ with torch.no_grad():
     U_pred = model_loaded(X).reshape(len(x), len(t)).cpu().numpy()
 
 # 绘制计算结果
+plt.rcdefaults()
 plt.figure(figsize=(5, 3), dpi=300)
 xnumpy = x.numpy()
 plt.plot(xnumpy, U_pred[:, 0], 'o', markersize=1)
 plt.plot(xnumpy, U_pred[:, 20], 'o', markersize=1)
 plt.plot(xnumpy, U_pred[:, 40], 'o', markersize=1)
+print('u1', U_pred[:,0])
+print('u2', U_pred[:,20])
+print('u3', U_pred[:,40])
+plt.legend()
+plt.title("Scatter Plots at Different Time Steps")
+plt.xlabel("X Coordinate")
+plt.ylabel("Predicted Values")
+
+# Save the first figure
+plt.savefig('scatter_plots.png')
+plt.close()  # Close the plot to free up memory
+
+# Create the second figure with a heatmap
 plt.figure(figsize=(5, 3), dpi=300)
 sns.heatmap(U_pred, cmap='jet')
+plt.title("Heatmap of Predictions")
+
+# Save the heatmap
+plt.figure(figsize=(5, 3), dpi=300)
+
+sns.heatmap(U_pred, cmap='jet')
 plt.show()
+plt.savefig('heatmap.png')
+plt.close()  # Close the plot to free up memory
