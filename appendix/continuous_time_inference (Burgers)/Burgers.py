@@ -186,7 +186,6 @@ if __name__ == "__main__":
             
     error_u = np.linalg.norm(u_star-u_pred,2)/np.linalg.norm(u_star,2)
     print('Error u: %e' % (error_u))                     
-
     
     U_pred = griddata(X_star, u_pred.flatten(), (X, T), method='cubic')
     Error = np.abs(Exact - U_pred)
