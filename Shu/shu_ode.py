@@ -13,7 +13,7 @@ from src.ode_PINN_softBC import ODE_PINN_SOFTBC
 from src.ode_PINN_adaptCollectionPoint import  ODE_PINN_AdaptiveCollectionPoint
 
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def Savepickle(obj, doc_path):
@@ -108,33 +108,33 @@ true_sol = lambda x :  -x*np.sin(x) - 2*np.cos(x) + (x*(np.pi - 2 + 2*np.cos(2*n
 
 
 
-solver = ODE_PINN_HARDBC(f=f, lb=0, ub= 2* np.e, BC=(1,0,np.pi), n_hidden=16, n_layers=3).to(device)
+solver = ODE_PINN_HARDBC(f=f, lb=0, ub= 2* np.e, BC=(1,0,np.pi), n_hidden=16, n_layers=3)
 solver.Train(train_num=3000, train_batch_size=64, learning_rate=0.01, 
              lr_step_size=100, min_lr =1e-10, lr_gamma=0.5,
              abs_tolerance=1e-4, max_epoch=1000, compute_L2_loss=True, true_sol=true_sol)
 SaveModel(solver,'./data/ode_3layer_16hidden.pkl')
 
-solver = ODE_PINN_HARDBC(f=f, lb=0, ub= 2* np.e, BC=(1,0,np.pi), n_hidden=16, n_layers=6).to(device)
+solver = ODE_PINN_HARDBC(f=f, lb=0, ub= 2* np.e, BC=(1,0,np.pi), n_hidden=16, n_layers=6)
 solver.Train(train_num=3000, train_batch_size=64, learning_rate=0.01, 
              lr_step_size=100, min_lr =1e-10, lr_gamma=0.5,
              abs_tolerance=1e-4, max_epoch=1000, compute_L2_loss=True, true_sol=true_sol)
 SaveModel(solver,'./data/ode_6layer_16hidden.pkl')
 
-solver = ODE_PINN_HARDBC(f=f, lb=0, ub= 2* np.e, BC=(1,0,np.pi), n_hidden=16, n_layers=10).to(device)
+solver = ODE_PINN_HARDBC(f=f, lb=0, ub= 2* np.e, BC=(1,0,np.pi), n_hidden=16, n_layers=10)
 solver.Train(train_num=3000, train_batch_size=64, learning_rate=0.01, 
              lr_step_size=100, min_lr =1e-10, lr_gamma=0.5,
              abs_tolerance=1e-4, max_epoch=1000, compute_L2_loss=True, true_sol=true_sol)
 SaveModel(solver,'./data/ode_10layer_16hidden.pkl')
 
 
-# solver = ODE_PINN_HARDBC(f=f, lb=0, ub= 2* np.e, BC=(1,0,np.pi), n_hidden=32, n_layers=6).to(device)
+# solver = ODE_PINN_HARDBC(f=f, lb=0, ub= 2* np.e, BC=(1,0,np.pi), n_hidden=32, n_layers=6)
 # solver.Train(train_num=3000, train_batch_size=64, learning_rate=0.01, 
 #              lr_step_size=100, min_lr =1e-10, lr_gamma=0.5,
 #              abs_tolerance=1e-4, max_epoch=50, compute_L2_loss=True, true_sol=true_sol)
 # SaveModel(solver,'./data/ode_6layer_32hidden.pkl')
 
 
-# solver = ODE_PINN_HARDBC(f=f, lb=0, ub= 2* np.e, BC=(1,0,np.pi), n_hidden=64, n_layers=6).to(device)
+# solver = ODE_PINN_HARDBC(f=f, lb=0, ub= 2* np.e, BC=(1,0,np.pi), n_hidden=64, n_layers=6)
 # solver.Train(train_num=3000, train_batch_size=64, learning_rate=0.01, 
 #              lr_step_size=100, min_lr =1e-10, lr_gamma=0.5,
 #              abs_tolerance=1e-4, max_epoch=50, compute_L2_loss=True, true_sol=true_sol)
@@ -179,15 +179,15 @@ SaveModel(solver,'./data/ode_10layer_16hidden.pkl')
 
 
 path1 = './data/ode_3layer_16hidden.pkl'
-solver1 = LoadModel(path1).to(device)
+solver1 = LoadModel(path1)
 loss1 = solver1.L2_loss
 
 path2 = './data/ode_6layer_16hidden.pkl'
-solver2 = LoadModel(path2).to(device)
+solver2 = LoadModel(path2)
 loss2 = solver2.L2_loss
 
 path3 = './data/ode_10layer_16hidden.pkl'
-solver3 = LoadModel(path3).to(device)
+solver3 = LoadModel(path3)
 loss3 = solver3.L2_loss
 
 
